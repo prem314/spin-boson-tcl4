@@ -24,13 +24,14 @@ Please cite the following works:
 
 To appear on arxiv soon as preprint:
 
+<pre> ```
 @article{PremAnalytic2025,
   title = {Analytic derivation and benchmarking of asymptotic TCL4 generator for general Spin-Boson Model with odd spectral density},
   author = {Kumar, Prem and Athulya, K. P. and Ghosh, Sibasish},
   journal = {arXiv preprint},
   year = {2025}
 }
-
+``` </pre>
 
 # How to use the Supplementary material
 
