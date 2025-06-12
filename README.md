@@ -22,14 +22,14 @@ Please cite the following works:
 }
 </pre>
 
-<pre> ```
+<pre>
 @article{PremAnalytic2025,
   title = {Analytic derivation and benchmarking of asymptotic TCL4 generator for general Spin-Boson Model with odd spectral density},
   author = {Kumar, Prem and Athulya, K. P. and Ghosh, Sibasish},
   journal = {arXiv preprint},
   year = {2025}
 }
-``` </pre>
+</pre>
 
 # How to use this Code
 
