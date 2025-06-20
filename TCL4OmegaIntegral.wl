@@ -4,10 +4,6 @@
 (*TCL4OmegaIntegral*)
 
 
-(* ::Text:: *)
-(*Do not delete the numerical and verification code from here. Wiki[TCL4And2DrudeEval] is just for getting the result fast, not for record, verifications and tests. This notebook is there for all of these.*)
-
-
 Wiki[TCL4And2DrudeEval]
 Wiki[GenHTCL4GenCalc]
 

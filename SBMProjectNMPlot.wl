@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*AntiPodalSBMProjectNMPlot*)
+(*SBMProjectNMPlot*)
 
 
 (* ::Chapter:: *)

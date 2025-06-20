@@ -4,6 +4,16 @@
 (*TCL4SpinBosonFunctions*)
 
 
+(* Set the Wiki function to hold its first argument unevaluated *)
+SetAttributes[Wiki, HoldFirst]
+
+(* Define the Wiki function to convert the symbol's name to a string and create the hyperlink *)
+Wiki[symbol_Symbol] := Module[{name},
+  name = SymbolName[symbol];
+  Hyperlink[name, name <> ".wl"]
+]
+
+
 TCL4DynamicsFolder = "/home/premkr/Dropbox/work/projects/tcl4_dynamics";
 
 
@@ -457,14 +467,8 @@ decomposeExpr[expr_, x_, y_] := Module[{A, terms, expr2},
 ]
 
 
-Min[\[Pi], 5]
-
-
 (* ::Section:: *)
 (*Numerical Integral Eval*)
-
-
-Coth[\[Beta] \[Omega]/2] /. \[Omega] -> 2 \[Pi] I /\[Beta]
 
 
 ContourIntegral[expr_, poleList_:{}, prec_:16] := Module[{e2, \[Delta]},

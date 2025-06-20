@@ -19,7 +19,7 @@ BetaNumVal        = RandomReal[{0.1,1}];
 \[Theta]NumVal           = RandomReal[{0.1,1}];
 *)
 
-(*
+
 GammaNumVal       =  0.00358;
 LambdaNumVal      = 0.207;
 \[CapitalOmega]Val              = 0.191;
@@ -28,11 +28,14 @@ BetaNumVal        = 0.315;
 
 p1NumVal          = Sin[\[Theta]NumVal];
 p3NumVal          = Cos[\[Theta]NumVal];
-*)
 
+
+
+
+
+(*
 LambdaNumVal      = 7;
 TNumVal = 1
-
 
 GammaNumVal       = 0.01;
 
@@ -44,6 +47,7 @@ BetaNumVal        = 1/TNumVal;
 
 p1NumVal          = Sin[\[Theta]NumVal]
 p3NumVal          = Cos[\[Theta]NumVal]
+*)
 
 NumReplace[expr_] := expr //. {
   p1 -> p1NumVal,
@@ -111,7 +115,7 @@ FinalResult
 T1 = AbsoluteTime[];
 
 minUp  = 2;
-maxUp  = 2^9;
+maxUp  = 2^10;
 base   = 2;
 
 
@@ -260,14 +264,15 @@ plotFileName = FileNameJoin[{TCL4DynamicsFolder,"VerificationPlot_Lambda" <> ToS
 Export[plotFileName, TCL4GenPlot];
 
 
-(*
+
 DumpVar[DrudeVsGeneralPlotData]
-*)
+
 
 
 Re[TCL0GeneratorNum] // MatrixForm
 Re[TCL2GeneratorNum] // MatrixForm
 Re[TCL4GeneratorNum] // MatrixForm
+
 
 
 

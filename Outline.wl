@@ -1,11 +1,7 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*ProjectTCL4DynamicsForSpinBoson*)
-
-
-(* ::Text:: *)
-(*Following file has the better calculations of TCL4 dynamics for simple Hamiltonian. It also numerically evaluates it for Drude.*)
+(*Outline*)
 
 
 (* ::Chapter:: *)
@@ -26,10 +22,6 @@ Wiki[TCL2GeneratorCalc]
 (*TCL4*)
 
 
-(* ::Text:: *)
-(*The idea is to do all the calcs again, neatly. From scratch.*)
-
-
 Wiki[TCL4TripleTimeIntegral]
 Wiki[TCL4OmegaIntegral]
 
@@ -44,10 +36,6 @@ Wiki[TCL4GeneratorEvaluationForDrude]
 (*Drude Calcs*)
 
 
-(* ::Text:: *)
-(*verify that the following result matches with our earlier results.*)
-
-
 Wiki[TCL4DrudeGeneratorCalcV2]
 Wiki[TCL2DrudeGeneratorCalc]
 
@@ -59,10 +47,6 @@ Wiki[TCL2DrudeGeneratorCalc]
 Wiki[TCL4Verification]
 Wiki[TCL4PrecisionVerification]
 Wiki[TCL4VerificationPlotAgainstDrude]
-
-
-(* ::Text:: *)
-(*HEOM plot code is in this file.*)
 
 
 Wiki[TCLVsHEOMFidelity]
@@ -85,11 +69,27 @@ Get["TCL2DrudeGenerator.mx"]
 
 Get["SteadyStateSpinBosonResult.mx"]
 
+Get["datasimpletcl2_gamma01_thetapi2_modifiedtcl2_400_antipodal.mx"]
+Get["datasimpletcl4_gamma01_thetapi2_modifiedtcl4_400_antipodal.mx"]
+
+Get["datasimpletcl2_gamma01_thetapi2_modifiedtcl2_4096.mx"]
+Get["datasimpletcl4_gamma01_thetapi2_modifiedtcl4_4096.mx"]
+
 
 Wiki[TCL4DynamicsSpinBosonResults]
 Wiki[O2SSCalcSpinBoson]
 
-Wiki[NonMarkovianitySpinBoson]
+
+Wiki[AntipodalTCL2NM]
+Wiki[AntipodalTCL4NM]
+Wiki[AntipodalSBMProjectNMPlot]
+
+
+Wiki[TraceDistanceDynamicsPlot]
+
+
+Wiki[GeneralTCL2NM]
+Wiki[GeneralTCL4NM]
 Wiki[SBMProjectNMPlot]
 
 
@@ -101,13 +101,10 @@ Wiki[MyFunctions]
 Wiki[MathFuncMathematica]
 Wiki[TCL4SpinBosonFunctions]
 Wiki[DrudeCutoffFunctions]
-Wiki[LatexExtract]
 
 
 (* ::Section:: *)
 (*Other useful files*)
 
 
-Wiki[ArrayTCL4Verification]
-Wiki[ArrayPlotTCLVsHEOMFidelity]
 Wiki[TCLMarkovianityResonanceCondition]

@@ -19,8 +19,8 @@ LoadVar[TCL0Generator]
 (*Spectral densities*)
 
 
-LambdaNumVal      = 7;
-TNumVal = 1
+LambdaNumVal      = 1;
+TNumVal = 8;
 
 
 GammaNumVal       = 0.01;
@@ -103,6 +103,16 @@ TCL0GeneratorNum = NumReplaceFinal[TCL0Generator];
 Re[TCL0GeneratorNum] // MatrixForm
 Re[TCL2GeneratorNum] // MatrixForm
 Re[TCL4GeneratorNum] // MatrixForm
+
+
+Re[TCL2GeneratorNum]
+Re[TCL4GeneratorNum]
+
+
+(* ::Text:: *)
+(*T = 8, Lambda = 0.2*)
+(*{{0, 0, 0, 0}, {0., 0., 0, 0.}, {0., 0.123725, -0.0155178, 0.}, {-0.00154663, 0., 0, -0.0155178}}*)
+(*{{0, 0, 0, 0}, {0., 0., 0., 0.}, {0., -0.00478193, -0.0382674, 0.}, {0.00023552, 0., 0., 0.00235902}*)
 
 
 (*
@@ -284,180 +294,3 @@ PlotFunc[3]
 
 PlotFunc[4]
 
-
-
-(* ::Chapter:: *)
-(*NCP calcs*)
-
-
-CorrRhoBell = {{1, 0,  0, 0},  (* Coeffs for I\[Tensor]I, I\[Tensor]X, I\[Tensor]Y, I\[Tensor]Z *)
-               {0, 1,  0, 0},  (* Coeffs for X\[Tensor]I, X\[Tensor]X, X\[Tensor]Y, X\[Tensor]Z *)
-               {0, 0, -1, 0},  (* Coeffs for Y\[Tensor]I, Y\[Tensor]X, Y\[Tensor]Y, Y\[Tensor]Z *)
-               {0, 0,  0, 1}}; (* Coeffs for Z\[Tensor]I, Z\[Tensor]X, Z\[Tensor]Y, Z\[Tensor]Z *)
-
-
-FirstQubitEvolve[t_, CorrRho_, TCl4Map_]:= TCl4Map[t] . CorrRho
-
-FirstQubitEvolve[1, CorrRhoBell, TCl4Map] // MatrixForm
-
-TCL4Rho[1,{1,0,0,0}]
-
-
-FirstQubitEvolve[1, CorrRhoBell, TCl2Map] // MatrixForm
-
-
-(* Define the single-qubit Pauli matrices *)
-(* SigmaMatrices[[1]] = Identity, SigmaMatrices[[2]] = PauliX, etc. *)
-SigmaMatrices = {IdentityMatrix[2], PauliMatrix[1], PauliMatrix[2], PauliMatrix[3]};
-
-(* Function to convert a 4x4 density matrix to its 4x4 Pauli coefficients matrix *)
-DensityMatrixToPauliCoefficients[rho_?MatrixQ] :=
-  Module[{dimCheck = Dimensions[rho]},
-   If[dimCheck != {4, 4},
-    Print["Error: Density matrix (rho) must be 4x4. Dimensions received: ", dimCheck];
-    Return[$Failed];
-   ];
-   Table[
-    Tr[rho . KroneckerProduct[SigmaMatrices[[k]], SigmaMatrices[[l]]]],
-    {k, 1, 4}, {l, 1, 4}
-   ]
-  ];
-
-(* Function to convert a 4x4 Pauli coefficients matrix back to a 4x4 density matrix *)
-PauliCoefficientsToDensityMatrix[coeffs_?MatrixQ] :=
-  Module[{dimCheck = Dimensions[coeffs]},
-   If[dimCheck != {4, 4},
-    Print["Error: Pauli coefficients matrix (coeffs) must be 4x4. Dimensions received: ", dimCheck];
-    Return[$Failed];
-   ];
-   (1/4) * Sum[
-     coeffs[[k, l]] * KroneckerProduct[SigmaMatrices[[k]], SigmaMatrices[[l]]],
-     {k, 1, 4}, {l, 1, 4}
-   ]
-  ];
-
-
-lkReplace = {l -> 2, k->3}
-
-KroneckerProduct[SigmaMatrices[[2]], SigmaMatrices[[3]]] // MatrixForm
-
-
-
-TensorProduct[SigmaMatrices[[2]], SigmaMatrices[[3]]] // MatrixForm
-
-
-x = {{a,b},{c,d}};
-y = {{1,2},{3,4}};
-MatrixForm[KroneckerProduct[x,y]]
-
-
-(* ::Text:: *)
-(*This means KroneckerProduct[x,y]_{i1 i2; j1 j2} = x_{i1 j1} y_{i2 j2} = x \otimes y*)
-
-
-(* --- Example Usage --- *)
-
-(* 1. Create an example two-qubit density matrix (e.g., a Bell state |Phi+>) *)
-(* |Phi+> = (1/Sqrt[2]) * (|00> + |11>) *)
-(* ket00 = {1,0,0,0}; ket11 = {0,0,0,1}; *)
-(* psiPlus = (1/Sqrt[2]) (ket00 + ket11); *)
-(* rhoPhiPlus = Outer[Times, psiPlus, Conjugate[psiPlus]]; *)
-(* More directly: *)
-rhoPhiPlus = {{1/2, 0, 0, 1/2}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1/2, 0, 0, 1/2}};
-
-Print["Original Density Matrix (rhoPhiPlus):"];
-Print[MatrixForm[rhoPhiPlus]];
-
-(* 2. Convert it to Pauli basis representation *)
-pauliCoeffsPhiPlus = DensityMatrixToPauliCoefficients[rhoPhiPlus];
-
-Print["\nPauli Coefficients Matrix (P):"];
-If[pauliCoeffsPhiPlus =!= $Failed, Print[MatrixForm[N[pauliCoeffsPhiPlus]]]];
-(* Expected for Phi+: p_II=1, p_XX=1, p_YY=-1, p_ZZ=1, others 0 *)
-(* P = {{1,0,0,0},{0,1,0,0},{0,0,-1,0},{0,0,0,1}} *)
-
-(* 3. Convert the Pauli coefficients back to the density matrix *)
-rhoReconstructed = PauliCoefficientsToDensityMatrix[pauliCoeffsPhiPlus];
-
-Print["\nReconstructed Density Matrix (from P):"];
-If[rhoReconstructed =!= $Failed, Print[MatrixForm[Chop[N[rhoReconstructed]]]]];
-
-(* 4. Verify the reconstruction *)
-If[rhoReconstructed =!= $Failed,
- Print["\nVerification: Is reconstructed rho close to original rho? ",
-  Chop[N[rhoReconstructed]] == Chop[N[rhoPhiPlus]]]
- ];
-
-(* Example with a product state: |0><0| tensor |+><+| *)
-(* rhoA = {{1,0},{0,0}}; *) (* |0><0| *)
-(* rhoB = {{1/2, 1/2},{1/2, 1/2}}; *) (* |+><+| *)
-(* rhoProduct = KroneckerProduct[rhoA, rhoB]; *)
-rhoProduct = {{1/2, 1/2, 0, 0}, {1/2, 1/2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-
-Print["\n\n--- Example with Product State rhoA x rhoB ---"];
-Print["Original Product Density Matrix (rhoProduct):"];
-Print[MatrixForm[rhoProduct]];
-
-pauliCoeffsProduct = DensityMatrixToPauliCoefficients[rhoProduct];
-Print["\nPauli Coefficients Matrix for Product State (P_product):"];
-If[pauliCoeffsProduct =!= $Failed, Print[MatrixForm[N[pauliCoeffsProduct]]]];
-(* Expected for |0><0| (A) x |+><+| (B):
-   Pauli vec for A (I,Z): {1,0,0,1}
-   Pauli vec for B (I,X): {1,1,0,0}
-   P_product should be OuterProduct[{1,0,0,1}, {1,1,0,0}]
-   P_product = {{1,1,0,0},{0,0,0,0},{0,0,0,0},{1,1,0,0}}
-*)
-
-rhoReconstructedProduct = PauliCoefficientsToDensityMatrix[pauliCoeffsProduct];
-Print["\nReconstructed Product Density Matrix:"];
-If[rhoReconstructedProduct =!= $Failed, Print[MatrixForm[Chop[N[rhoReconstructedProduct]]]]];
-
-If[rhoReconstructedProduct =!= $Failed,
- Print["\nVerification for product state: ",
-  Chop[N[rhoReconstructedProduct]] == Chop[N[rhoProduct]]]
- ];
-
-
-NegativityEval[t_, CorrRho_, TCL2Rho_]:= Total[Abs[Eigenvalues[PauliCoefficientsToDensityMatrix[FirstQubitEvolve[t,CorrRho, TCL2Rho]]]]]
-
-
-TraceEval[t_, CorrRho_, TCL2Rho_]:= Eigenvalues[PauliCoefficientsToDensityMatrix[FirstQubitEvolve[t,CorrRho, TCL2Rho]]]
-tcl2Ein = TraceEval[1, CorrRhoBell, TCl2Map]
-tcl4Ein = TraceEval[1, CorrRhoBell, TCl4Map]
-
-
-NegativityEval[1, CorrRhoBell, TCl2Map]
-NegativityEval[1, CorrRhoBell, TCl4Map]
-
-
-Plot[
-  {NegativityEval[t, CorrRhoBell, TCl2Map], NegativityEval[t, CorrRhoBell, TCl4Map]},
-  {t, 0, 3},
-  PlotLegends -> {"TCL2", "TCL4"},
-  PlotRange->All
-]
-
-
-Plot[
-  NegativityEval[t, CorrRhoBell, TCl2Map] - NegativityEval[t, CorrRhoBell, TCl4Map],
-  {t, 0, 3}
-]
-
-
-NIntegrate[NegativityEval[t, CorrRhoBell, TCl2Map] - NegativityEval[t, CorrRhoBell, TCl4Map], {t,0,3}]
-
-
-
-(* ::Text:: *)
-(*The following is the paradox:*)
-(*  - TCL4 is closer to HEOM than TCL2*)
-(*  - HEOM has minimun NCP-ness, for some mysterious reasons.*)
-(*  - TCL2 has less NCP-ness than TCL4.*)
-(*  *)
-(*How is this even possible?*)
-(**)
-(*I think the resolution is that an asymptotic master equation cannot act on one side of a maximally entangled state. Why? Because in the asymptotic limit, it will affect the entanglement. It is a good sign that in large time limit, TCL4 does start getting better than TCL2.*)
-(**)
-(*A better judge of TCL4's better NCP ness would be by casting it in GKSL form and looking for the negative decay rates. That, hopefully, should be less than TCL2's.*)
-(**)
-(*But it is still surprising that TCL4 gets more into the NCP domain! In fact, suspicious.*)

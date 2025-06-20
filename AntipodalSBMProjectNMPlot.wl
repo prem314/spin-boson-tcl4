@@ -19,9 +19,8 @@ Get["TCL4SpinBosonFunctions.wl"]
 (**)
 
 
-(*
-lambdaList=Range[0.2,8,0.2]; 
-temperatureList=Range[0.2,8,0.2]; 
+lambdaList=Range[0.2,8,0.1]; 
+temperatureList=Range[0.2,8,0.1]; 
 
 Loadtcl2=Get[FileNameJoin[{NotebookDirectory[],"datasimpletcl2_gamma01_thetapi2_modifiedtcl2_400_antipodal.mx"}]];
 Loadtcl4=Get[FileNameJoin[{NotebookDirectory[],"datasimpletcl4_gamma01_thetapi2_modifiedtcl4_400_antipodal.mx"}]];
@@ -29,10 +28,13 @@ Loadtcl4=Get[FileNameJoin[{NotebookDirectory[],"datasimpletcl4_gamma01_thetapi2_
 tcl2Name = "AntiPtcl2lamdaTplot.pdf"
 tcl4Name = "AntiPtcl4lamdaTplot.pdf"
 diffPlotName = "AntiPredifftcl.pdf"
-*)
 
 
 
+Length[lambdaList]
+
+
+(*
 OldlambdaList=Range[0.2,8,0.2]; 
 OldtemperatureList=Range[0.2,8,0.2]; 
 
@@ -48,7 +50,7 @@ temperatureList=Range[0.6,8,0.2]
 tcl2Name = "tcl2lamdaTplot.pdf"
 tcl4Name = "tcl4lamdaTplot.pdf"
 diffPlotName = "redifftcl.pdf"
-
+*)
 
 
 (*
@@ -115,9 +117,9 @@ universalColorFunction = (Blend[{White, Darker[Darker[Purple]]}, (# - dmin)/(dma
 
 (* 1. THE PLOT *)
 figtcl2 = ListDensityPlot[TCl2Normalized,
-   FrameLabel -> {Style["\[CapitalLambda]",  16], Style["T",  Font1]},
+   FrameLabel -> {Style["\[CapitalLambda]", Font1], Style["T", Font1]},
    FrameStyle -> Directive[Black, AbsoluteThickness[1]],
-   FrameTicksStyle -> Directive[Black,  Font2],
+   FrameTicksStyle -> Directive[Black, Font2],
    ColorFunction -> universalColorFunction, (* Use the new function *)
    ColorFunctionScaling -> False, (* IMPORTANT: Turn off automatic scaling *)
    DataRange -> {MinMax[lambdaList], MinMax[temperatureList]},
@@ -154,7 +156,7 @@ finalPlotTCL2 = Legended[
     LegendLayout -> "Column", 
     LegendMarkerSize -> 220,
     Ticks -> customTicks,
-    LabelStyle -> {Black,  Font2}
+    LabelStyle -> {Black, Font2}
     ]
    ];
 
@@ -173,9 +175,9 @@ TCL4Normalized = Log10[Loadtcl4 + 10^-6];
 
 (* 1. THE PLOT *)
 figtcl4 = ListDensityPlot[TCL4Normalized,
-   FrameLabel -> {Style["\[CapitalLambda]",  16], Style["T",  Font1]},
+   FrameLabel -> {Style["\[CapitalLambda]", Font1], Style["T", Font1]},
    FrameStyle -> Directive[Black, AbsoluteThickness[1]],
-   FrameTicksStyle -> Directive[Black,  Font2],
+   FrameTicksStyle -> Directive[Black, Font2],
    ColorFunction -> universalColorFunction, (* Use the new function *)
    ColorFunctionScaling -> False, (* IMPORTANT: Turn off automatic scaling *)
    DataRange -> {MinMax[lambdaList], MinMax[temperatureList]},
@@ -190,7 +192,7 @@ finalPlotTCL4 = Legended[
     LegendLayout -> "Column", 
     LegendMarkerSize -> 220,
     Ticks -> customTicks,
-    LabelStyle -> {Black,  Font2}
+    LabelStyle -> {Black, Font2}
     ]
    ]
 
@@ -223,8 +225,8 @@ Export[FileNameJoin[{TCL4DynamicsFolder,tcl4Name}],finalPlotTCL4,ImageResolution
 (*(*A simpler version for the legend,which works directly on the[-1,1] scale*)legendColorFunction=Function[norm,Which[norm>0,Blend[{White,Red},norm],norm<0,Blend[{White,Blue},-norm],True,White]];*)
 (**)
 (*(*---4. Create Ticks for the Symmetric Legend---*)(*The real-world values you want to label on the bar*)*)
-(*posTicksData={10^-5,posMax};*)
-(*negTicksData={-negMax,-10^-2, -10^-3,-10^-4};*)
+(*posTicksData={10^-4,posMax};*)
+(*negTicksData={-negMax,-10^-1, -10^-2,-10^-3};*)
 (*allTicksData=Sort@DeleteDuplicates@Join[negTicksData,{0},posTicksData];*)
 (**)
 (*(*Create {position,label} pairs.The position is the value's location on the normalized[-1,1] bar.*)legendTicks=Table[{normalizeValue[t],NumberForm[t,2,ExponentFunction->(If[-3<#<4,Null,#]&)]},{t,allTicksData}];*)
@@ -259,6 +261,14 @@ temperatureList
 lambdaList
 
 
+Length[lambdaList]
+
+
+difftcl2tcl4[[9,39]]
+TCl2Normalized[[9,39]]
+TCL4Normalized[[9,39]]
+
+
 difftcl2tcl4 // MatrixForm
 
 
@@ -276,3 +286,13 @@ BlueRules2 = Take[sortedRules, 1]
 
 (* Extract just the positions from the rules *)
 TopBlueRegion2 = BlueRules2[[All, 1]]
+
+
+
+
+
+
+
+
+
+
