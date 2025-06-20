@@ -9,15 +9,12 @@ Get["DrudeCutoffFunctions.wl"]
 
 LoadVar[DrudeVsGeneralPlotData]
 
-
 TCL4GenPlot = VerificationPlotCombined[DrudeVsGeneralPlotData, {{3,1},{3,2},{3,3},{3,4},{4,1},{4,2},{4,3},{4,4}}]
 
 
 TCL4DynamicsFolder = "/home/premkr/Dropbox/work/projects/tcl4_dynamics"
 fullPath = FileNameJoin[{TCL4DynamicsFolder,"TCL4Verification.pdf"}]
 Export[fullPath, TCL4GenPlot, "PDF"];
-
-
 
 
 NumVals = DrudeVsGeneralPlotData[[2]]

@@ -40,19 +40,24 @@ VerificationPlotCombined[SimpleHDrudeVsGeneralPlotData1_, idx_] :=
 
     (* Prepare the list of legends directly as expressions *)
     legends = Table[
-      Superscript[Subscript["F", idx[[i]] ], "(4)"],  (* REMOVED MakeBoxes[] wrapper *)
+      Superscript[Subscript["F", idx[[i]] - {1,1} ], "(4)"],  (* REMOVED MakeBoxes[] wrapper *)
       {i, Length@SimpleHDrudeVsGeneralPlotData}
     ];
 
     plot = ListLinePlot[
       dataToPlot,
       PlotMarkers      -> Automatic,
-      PlotLegends      -> legends,                 (* Provide the list of expressions *)
+      PlotLegends      -> legends,
+      LabelStyle -> {Black, 24},               (* Provide the list of expressions *)
+      AspectRatio->0.7,
       Frame            -> True,
-      FrameLabel       -> {"UpLim", "Relative Error"},
+      FrameLabel       -> {Style["No. of Matsubara Terms", 24], Style["Relative Difference", 24]},
+      FrameStyle -> Directive[Black, AbsoluteThickness[1]],
+      FrameTicks-> {{All,None},{{10,100,1000},None}},
+      FrameTicksStyle -> Directive[Black, 20],
       PlotRange        -> All,
       ImageSize        -> Large,
-      BaseStyle -> {FontSize -> 12}, 
+      BaseStyle -> {FontSize -> 20}, 
       ScalingFunctions -> {"Log", "Log"}
     ];
     plot
@@ -81,18 +86,6 @@ DrudeAssumptions = {t>0, p1 \[Element] Reals, p3 \[Element] Reals, \[Mu]0 > 0, m
 
 
 StabilizeDrudeTripleInt[expr_]:= ReleaseHold[Expand[TrigToExp[expr]] /. Exp[x_] -> Exp[HoldForm[Simplify[x, Assumptions->DrudeAssumptions]]]]
-
-
-(* ::Text:: *)
-(*Error message: Integrate::cas*)
-(**)
-(*I understand that \[CapitalOmega] comes in the exponential. Mathematica wants some variable in the limit 0 to -\[Pi]/\[CapitalOmega]. That is, the overall exponent in the limit 0 to \[Pi]. But \[CapitalOmega] has been forced to be greater than 1.*)
-(**)
-(*But \[CapitalOmega] is system frequency, an of course I can choose it to be negative!*)
-
-
-(* ::Text:: *)
-(*If I also put \[Beta] > 0 and \[Gamma]>0, then there is a contradiction because either you work with \[Mu]0 and \[Kappa] or \[Beta] and \[Gamma].*)
 
 
 GenToDrudeRule = {f[0] -> Limit[fDrude[\[Omega]], \[Omega]->0], J[x_] -> JDrude[x], f[x_]-> fDrude[x], p1 -> Sin[\[Theta]], p3 -> Cos[\[Theta]], J'[x_] -> D[JDrude[x],x], f'[x_] -> D[fDrude[x],x]};

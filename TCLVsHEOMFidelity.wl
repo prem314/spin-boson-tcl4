@@ -26,17 +26,17 @@ Get["TCL4SimpleHGenerator.mx"];
 Get["TCL2Generator.mx"];
 
 
-(*
+
 GammaNumVal       = 0.02;
 LambdaNumVal      = 1;
 \[CapitalOmega]Val = 1.6;
 BetaNumVal        = 1;
 
-\[Theta]NumVal = N[\[Pi]/2];
+\[Theta]NumVal = N[\[Pi]/4]
 
 p1NumVal          = Sin[\[Theta]NumVal];
 p3NumVal          = Cos[\[Theta]NumVal];
-*)
+
 
 
 (*
@@ -85,6 +85,7 @@ p3NumVal          = Cos[\[Theta]NumVal];
 
 
 
+(*
 GammaNumVal    = RandomReal[{0.001, 0.01}];
 LambdaNumVal     = RandomReal[{0.5, 1.5}];
 \[CapitalOmega]Val = RandomReal[{1, 2}];
@@ -93,7 +94,7 @@ BetaNumVal       = RandomReal[{0.1, 0.3}];
 
 p1NumVal          = Sin[\[Theta]NumVal];
 p3NumVal          = Cos[\[Theta]NumVal];
-
+*)
 
 
 NumReplace[expr_] := expr //. {

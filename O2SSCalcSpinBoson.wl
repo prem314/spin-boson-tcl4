@@ -358,7 +358,7 @@ SigmaZSol = {With[{expr = p1Pop2}, {x2z -> HoldForm[Integrate[expr, {\[Omega], -
 (*Finally, let us calculate the 4th order sigmaX coherence.*)
 
 
-x4Dot = Final[[3]] //. Join[ GSol[[1]], SigmaXSol[[1]], SigmaYSol[[1]], sigmaZSol[[1]]];
+x4Dot = Final[[3]] //. Join[ GSol[[1]], SigmaXSol[[1]], SigmaYSol[[1]], SigmaZSol[[1]]];
 
 
 Solx4Dot = Coefficient[x4Dot, \[Lambda], 4];
@@ -383,10 +383,12 @@ xO4Val3 = Simplify[xO4Val2]
 SigmaX4Sol = {{x4x -> xO4Val3}};
 
 
-SteadyStateSpinBosonResult = {SigmaXSol, SigmaYSol, SigmaZSol, SigmaX4Sol}
+SteadyStateSpinBosonResult = {SigmaXSol, SigmaYSol, SigmaZSol, SigmaX4Sol};
 
 
+(*
 DumpVar[SteadyStateSpinBosonResult]
+*)
 
 
 
