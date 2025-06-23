@@ -23,8 +23,8 @@ Please cite the following works:
 </pre>
 
 <pre>
-@article{PremAnalytic2025,
-  title = {Analytic derivation and benchmarking of asymptotic TCL4 generator for general Spin-Boson Model with odd spectral density},
+@article{PremAsymptotic2025,
+  title = {Asymptotic TCL4 Generator for the Spin-Boson Model: Analytical Derivation and Benchmarking},
   author = {Kumar, Prem and Athulya, K. P. and Ghosh, Sibasish},
   journal = {arXiv preprint},
   year = {2025},
