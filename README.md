@@ -27,7 +27,10 @@ Please cite the following works:
   title = {Analytic derivation and benchmarking of asymptotic TCL4 generator for general Spin-Boson Model with odd spectral density},
   author = {Kumar, Prem and Athulya, K. P. and Ghosh, Sibasish},
   journal = {arXiv preprint},
-  year = {2025}
+  year = {2025},
+  month = {June},
+  doi = {10.48550/arXiv.2506.17009},
+  url = {https://doi.org/10.48550/arXiv.2506.17009}
 }
 </pre>
 
