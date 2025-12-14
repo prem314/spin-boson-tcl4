@@ -72,39 +72,3 @@ r5 = r4 //. TensorProduct[X_,TrB[B[t_] . B[t1_] . RhoB]] -> (\[Nu][t-t1] + I \[E
 r6 = r5 //. {\[Eta][-t+t1_] -> -\[Eta][t-t1], \[Nu][-t+t1_] -> \[Nu][t-t1]}
 
 r7 = Simplify[Collect[r6, {\[Nu][t-t1], \[Eta][t-t1]}]]
-
-
-(* 1. Define the full expression *)
-expr = I (RhoS . A[t1] . A[t] - A[t] . RhoS . A[t1] - A[t] . A[t1] . RhoS + 
-       A[t1] . RhoS . A[t]) \[Eta][t - t1] - (RhoS . A[t1] . A[t] - 
-       A[t] . RhoS . A[t1] + A[t] . A[t1] . RhoS - 
-       A[t1] . RhoS . A[t]) \[Nu][t - t1];
-
-(* 2. Robust Grouping Function *)
-(* This handles scalars (I, -1, etc.) correctly *)
-RobustGroup[exp_, op_] := Module[{terms, leftGroup, rightGroup},
-  terms = List @@ Expand[exp];
-  
-  (* Helper to check if a term starts or ends with op *)
-  (* pattern: optional scalar (c_.) times Dot product *)
-  
-  leftGroup = Total @ Cases[terms, c_. * Dot[op, rest__] :> c * Dot[rest]];
-  rightGroup = Total @ Cases[terms, c_. * Dot[rest__, op] :> c * Dot[rest]];
-  
-  op . leftGroup + rightGroup . op
-]
-
-(* 3. Separate Eta and Nu parts *)
-coeffEta = Coefficient[expr, \[Eta][t - t1]];
-coeffNu = Coefficient[expr, \[Nu][t - t1]];
-
-(* 4. Apply the robust grouping *)
-groupedEta = RobustGroup[coeffEta, A[t]];
-groupedNu = RobustGroup[coeffNu, A[t]];
-
-(* 5. Display Result *)
-FinalResult = groupedEta * \[Eta][t - t1] + groupedNu * \[Nu][t - t1]
-
-
-(* ::Text:: *)
-(*I just realize that I will be better off doing this calcs In sympy.*)
