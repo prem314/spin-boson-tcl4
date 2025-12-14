@@ -173,11 +173,15 @@ def bath_correlation(expr):
 
 
 def sign_rules(expr):
-    """Use stationarity: eta(-τ)=-eta(τ), nu(-τ)=nu(τ)."""
-    expr = expr.subs(eta(t1 - t), -eta(t - t1))
-    expr = expr.subs(nu(t1 - t), nu(t - t1))
-    expr = expr.subs(eta(-t + t1), -eta(t - t1))
-    expr = expr.subs(nu(-t + t1), nu(t - t1))
+    """Stationarity/parity: eta(-τ)=-eta(τ), nu(-τ)=nu(τ) for any τ."""
+    expr = expr.replace(
+        lambda e: e.func == eta and e.args and e.args[0].could_extract_minus_sign(),
+        lambda e: -eta(-e.args[0]),
+    )
+    expr = expr.replace(
+        lambda e: e.func == nu and e.args and e.args[0].could_extract_minus_sign(),
+        lambda e: nu(-e.args[0]),
+    )
     return expr
 
 
