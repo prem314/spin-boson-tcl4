@@ -42,7 +42,8 @@ All the main results of this work are available in `TCL4DynamicsSpinBosonResults
 
 ## TCL General Derivation
 
-* `TCLIntegrandCalcs.wl` starts from the expressions for the TCL2 and TCL4 generators (see Breuer, Kappler & Petruccione, 2001) and derives their matrix elements in Bloch-vector form.
+* `TCL4OperatorFormDerivation.wl` pedagogically derives eqn 9.61 and 9.62 of Breuer and Petruccione starting from eqn 9.45 and 9.51.
+* `TCLIntegrandCalcs.wl` starts from eqn 9.61 and 9.62 and derives their matrix elements in Bloch-vector form.
 * `TCL2GeneratorCalc.wl` evaluates the general TCL2 generator using those results.
 * `TCL4TripleTimeIntegral.wl` symbolically performs the triple-time integrals of the TCL4 generator matrix elements.
 * `TCL4OmegaIntegral.wl` then evaluates the associated frequency integrals in the long-time limit.

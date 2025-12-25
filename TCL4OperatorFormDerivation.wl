@@ -5,7 +5,7 @@
 
 
 (* ::Text:: *)
-(*This notebook derives eqn 9.61 and 9.62 of BR02 starting from eqn 9.45 and 9.51.*)
+(*This notebook pedagogically derives eqn 9.61 and 9.62 of BR02 starting from eqn 9.45 and 9.51.*)
 
 
 (* This allows signs and scalars to "leak out" of your Commutators automatically *)
