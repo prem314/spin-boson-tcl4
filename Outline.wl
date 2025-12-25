@@ -4,8 +4,25 @@
 (*Outline*)
 
 
+(* ::Text:: *)
+(*Run the following code to enable hyperlinking between notebooks in this folder for easier navigation.*)
+
+
+(* Set the Wiki function to hold its first argument unevaluated *)
+SetAttributes[Wiki, HoldFirst]
+
+(* Define the Wiki function to convert the symbol's name to a string and create the hyperlink *)
+Wiki[symbol_Symbol] := Module[{name},
+  name = SymbolName[symbol];
+  Hyperlink[name, name <> ".wl"]
+]
+
+
 (* ::Chapter:: *)
 (*General*)
+
+
+Wiki[TCL4OperatorFormDerivation]
 
 
 Wiki[TCLIntegrandCalcs]
