@@ -23,14 +23,19 @@ Please cite the following works:
 </pre>
 
 <pre>
-@article{PremAsymptotic2025,
-  title = {Asymptotic TCL4 Generator for the Spin-Boson Model: Analytical Derivation and Benchmarking},
+@article{69y3-x6vh,
+  title = {Asymptotic fourth-order time-convolutionless generator for the spin-boson model: Analytical derivation and benchmarking},
   author = {Kumar, Prem and Athulya, K. P. and Ghosh, Sibasish},
-  journal = {arXiv preprint},
-  year = {2025},
-  month = {June},
-  doi = {10.48550/arXiv.2506.17009},
-  url = {https://doi.org/10.48550/arXiv.2506.17009}
+  journal = {Phys. Rev. B},
+  volume = {113},
+  issue = {4},
+  pages = {045404},
+  numpages = {13},
+  year = {2026},
+  month = {Jan},
+  publisher = {American Physical Society},
+  doi = {10.1103/69y3-x6vh},
+  url = {https://link.aps.org/doi/10.1103/69y3-x6vh}
 }
 </pre>
 
