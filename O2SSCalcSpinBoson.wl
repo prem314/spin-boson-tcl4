@@ -4,6 +4,9 @@
 (*O2SSCalcSpinBoson*)
 
 
+SetDirectory[NotebookDirectory[]]
+
+
 Get["TCL4Generator.mx"]
 Get["TCL2Generator.mx"]
 Get["TCL0Generator.mx"]
@@ -199,6 +202,7 @@ SigmaYSol = FullSimplify[SigmaYSol1] //. {f[x_] -> J[x] Coth[\[Beta] x/2], J[-\[
 
 
 (* ::Text:: *)
+(*This part is the MVP.*)
 (*We use the second order coherences and the Gibbs population to find the second order population by going to the 4th order eigenvalue equation.*)
 
 
@@ -208,10 +212,22 @@ Clear[e4]
 x3Dot = Final[[4]] //. Join[GSol[[1]], SigmaYSol[[1]], SigmaXSol[[1]]];
 
 
+(* ::Text:: *)
+(*I am extracting the 4th order eqn, for the populations. We have to solve the following eqn.*)
+
+
 O4TermX3 = Coefficient[x3Dot, \[Lambda], 4]
 
 
+(* ::Text:: *)
+(*Here, I am formally equating the above expression to zero and solving for x2z, the population correstion.*)
+
+
 X2zSol = Solve[O4TermX3==0, x2z]
+
+
+(* ::Text:: *)
+(*Here, I am replacing the solution to x2z to the mathematica variable x2z.*)
 
 
 x2zVal = x2z //. X2zSol[[1]]
@@ -219,6 +235,7 @@ x2zVal = x2z //. X2zSol[[1]]
 
 (* ::Text:: *)
 (*The following function separates the constant terms from the integrals by putting them in separate elements of an array. For the integral parts, we only save the integrand for ease of algebraic manipulation, since all the integral terms have the same variable and range of integration.*)
+(*In other words, we are separating the constant terms and integrands as separate elements of a list, for our ease of manipulation.*)
 
 
 x2z0 = splitByIntegrate[x2zVal];
@@ -232,6 +249,7 @@ x2z1 = ReleaseHold[splitByIntegrate[x2zVal]]
 
 (* ::Text:: *)
 (*Since the contour of the integral is defined to go just above the real axis, we bring it back to the real axis by factoring in the residue contribution of the real axis poles. Why go back to the real axis? Because only then can we use the property like spectral density is an odd function to simplify the integral.*)
+(*That is, you formally tell yourself that the contours now go on the line rather than above it, and the effect of the 'half of the poles' you included is put in the constant part of the integral.*)
 
 
 x2z2 = ResLoopSeg[x2z1[[2]] , \[Omega], z,\[Omega]]
@@ -249,14 +267,14 @@ x2z2[[3]] //. {J[x_] -> f[x] Tanh[\[Beta] x/2], f[-\[CapitalOmega]] -> f[\[Capit
 
 
 (* ::Text:: *)
-(*Just subtracting the pole contribution above from the constant term in the 4th order eigenvalue equation for the populations.*)
+(*Just subtracting the pole contribution above from the constant term in the 4th order eigenvalue equation for the populations. That is, x2z2[[1]] is the pole contribution.*)
 
 
 ConstantCOntri = x2z1[[1]] - x2z2[[1]]
 
 
 (* ::Text:: *)
-(*Following assumption can now be made.*)
+(*Following assumption can now be made. That is, we are expressing everything in terms of f(x) for simplicity and ease of cancellations.*)
 
 
 SpecSymRule = {J[x_] -> f[x] Tanh[\[Beta] x/2], J'[x_] -> D[f[x] Tanh[\[Beta] x/2], x], f[-\[Omega]+\[CapitalOmega]] -> f[\[Omega]-\[CapitalOmega]], f[-\[Omega]-\[CapitalOmega]] -> f[\[Omega]+\[CapitalOmega]], f[-\[CapitalOmega]] -> f[\[CapitalOmega]], f[-\[Omega]]-> f[\[Omega]]}
@@ -389,6 +407,4 @@ SteadyStateSpinBosonResult = {SigmaXSol, SigmaYSol, SigmaZSol, SigmaX4Sol};
 (*
 DumpVar[SteadyStateSpinBosonResult]
 *)
-
-
 
