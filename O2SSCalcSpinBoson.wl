@@ -291,11 +291,17 @@ Simplify[ConstantCOntri /. Join[SpecSymRule, SpecZeroRule]]
 (*Integral term*)
 
 
+(*
+Simplify[x2z2[[2]] - x2z1[[2]]]
+*)
+(*These two are the same*)
+
+
 (* ::Text:: *)
 (*Again, since the contour is now on the real axis, we can now assume that J[x] = - J[-x]. Note the factor of 1/2 I did below to compensate for the double counting during addition below.*)
 
 
-IntContri = Simplify[Simplify[(x2z2[[2]] + (x2z1[[2]] /. \[Omega] -> -\[Omega]))/2] //. {J[x_] -> f[x] Tanh[\[Beta] x/2], 
+IntContri = Simplify[Simplify[(x2z2[[2]] + (x2z2[[2]] /. \[Omega] -> -\[Omega]))/2] //. {J[x_] -> f[x] Tanh[\[Beta] x/2], 
 							J'[x_] -> D[f[x] Tanh[\[Beta] x/2], x], f[-\[Omega]+\[CapitalOmega]] -> f[\[Omega]-\[CapitalOmega]], f[-\[Omega]-\[CapitalOmega]] -> f[\[Omega]+\[CapitalOmega]], 
 							f[-\[CapitalOmega]] -> f[\[CapitalOmega]], f[-\[Omega]]-> f[\[Omega]]}]
 
@@ -325,6 +331,10 @@ P3Part = CoeffTerm[IntContri2, p3^2]
 P3Part2 = Collect[P3Part, {f[\[Omega]] f[\[Omega]-\[CapitalOmega]], f[\[Omega]] f[\[Omega]+\[CapitalOmega]]}]
 
 
+(* ::Text:: *)
+(*The following is a clever function that only acts on those terms of your function which have f[\[Omega]] f[\[Omega]-\[CapitalOmega]] in this case. Maybe there is a cleverer way of doing it, but we go with this.*)
+
+
 OmShift[T_]:= T /. \[Omega] -> \[Omega] + \[CapitalOmega]
 
 P3Part2Part1 = ConditionalOp[Expand[P3Part2], {f[\[Omega]] f[\[Omega]-\[CapitalOmega]]}, OmShift]
@@ -342,6 +352,10 @@ Simplify[P3Part2Part1]
 
 
 P1Part = CoeffTerm[IntContri2, p1^2]
+
+
+(* ::Text:: *)
+(*Just a verification step.*)
 
 
 Simplify[P3Part + P1Part - IntContri2]
