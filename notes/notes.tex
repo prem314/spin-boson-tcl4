@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{braket}
+\usepackage{cleveref}
+
+\title{Spin Boson TCL4 code run through}
+\author{Prem Kumar}
+\date{\today}
+
+\onehalfspacing
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Contains notes on the code that can be found on this repo.
+\end{abstract}
+
+\section{Second order SS match with MFGS}
+
+The main file for this is \verb|O2SSCalcSpinBoson.wl|. This code calculates the Steady state corrections. 2nd order for populations and 4th order for the coherences.
+
+\subsection{2nd order SS correction and match with MFGS}
+
+Refer to V2 of the paper "Equivalence between the second order steady state for the spin-Boson model and its quantum mean force Gibbs state" (arxiv) for this. Eqn 41 has to be solved. The LHS is the second order population. The RHS is complicated and needs to be simplified. See eqn eqn 44,45, 39, B17, B18 and B9 for the expressions on the RHS. Once we have all the expressions, we \textit{just} need to simplify.
+
+\verb|O2SSCalcSpinBoson.wl| already assumes the expressions for these terms. The RHS is either a fixed expression or a single integral over $\omega$, for $\omega$ going from $-\infty$ to $+\infty$ where, by convention, if there is any pole on the contour, we assume the integral passed it from above.
+
+The code first divides the expression into two parts. The constant part and the integrand. Then, in order to simplify the complicated expression for the integrand, we need to use the fact that we have assumed in the paper $J(-\omega) = -J(\omega)$. But note a catch. If the integrand passes above the pole on the real line, this is no more true!
+
+For this reason, we need to formally bring the contour back to the real line, and any half residue that we get as a result has to be subtracted from the result subsequently. We do this. The subtracted part goes to the 'costant' part of the answer.
+
+We apply the fact that $J(\omega)$ is odd and find that the constant is zero. So, everything is now just an integral. We also note that our expressions contain $f(\omega) \equiv J(\omega) \coth(\beta \omega/2)$. It is not a good idea to keep independent expressions at this stage because we are looking for cancellations, so we replace $J(\omega)$ with $f(\omega) \tan(\beta \omega/2)$. So, all expressions depend only on $f(\omega)$ now. Also, we note now that $f(\omega)$ is an even function, which a a property we use for simplification. For example, this implies that $f'(-\omega) = - f'(\omega)$. We will replace terms of the first form to latter so that mathematica knows to cancel things. Also, note that $f'(0)=0$. And so on.
+
+Next, from the MFGS result from Cresser and Anders paper, we know that the final result 2nd order population correction is independent of $a_3$ (throughout the code, the variables $p1$ and $p3$ is used for variables $a_1$ and $a_3$, for a reason that I do not remember anymore). So, we can simplify the math by separating the integrand into $a_3$ and $a_1$ dependent terms. 
+
+For the $a_3$ dependent terms, there are 2 types of sub-terms. Those that depend upon $f(\omega) f(\omega + \Omega)$ and those that depend upon $f(\omega) f(\omega - \Omega)$, where $\Omega$ is the system frequency (a positive real number). But since the integral is defined from negative infinity to positive infinity, for the sub terms of second type, we can do a variable renaming as $\omega \to \omega + \Omega$. And Voila, the $a_3$ dependent terms disappear from picture.
+
+This leaves us with just the $a_1$ dependent term. The code then shows this integrand to be equivalent to the integrand for the MFGS that can be found in Cresser Anders PRL.
+
+\section*{References}
+\bibliographystyle{plain}
+% \bibliography{references}
+
+\end{document}
