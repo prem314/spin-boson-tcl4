@@ -1,0 +1,32 @@
+# Python bytecode and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Python environments
+.python-packages/
+.venv/
+venv/
+env/
+ENV/
+
+# Python tooling caches and reports
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+htmlcov/
+.mplconfig/
+
+# Local editor and OS junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex
+.codex/
