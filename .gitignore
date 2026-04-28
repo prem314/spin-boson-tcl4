@@ -27,6 +27,52 @@ htmlcov/
 *.gif
 *.npz
 
+# Audio files
+*.aac
+*.aif
+*.aifc
+*.aiff
+*.alac
+*.amr
+*.ape
+*.flac
+*.m4a
+*.m4b
+*.m4p
+*.mid
+*.midi
+*.mka
+*.mp3
+*.mpga
+*.ogg
+*.oga
+*.opus
+*.ra
+*.wav
+*.weba
+*.wma
+
+# Video files
+*.3g2
+*.3gp
+*.avi
+*.f4v
+*.flv
+*.m2ts
+*.m4v
+*.mkv
+*.mov
+*.mp2
+*.mp4
+*.mpeg
+*.mpg
+*.mts
+*.ogv
+*.ts
+*.vob
+*.webm
+*.wmv
+
 # Local editor and OS junk
 .DS_Store
 Thumbs.db
