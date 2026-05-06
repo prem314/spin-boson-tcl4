@@ -25,7 +25,22 @@ htmlcov/
 
 # Images
 *.gif
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.webp
+*.bmp
+*.tif
+*.tiff
+*.ico
+*.heic
+*.heif
 *.npz
+
+# Documents
+*.docx
 
 # Audio files
 *.aac
@@ -80,3 +95,45 @@ Thumbs.db
 .vscode/
 .codex
 .codex/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.glg
+*.glo
+*.gls
+*.ist
+*.acn
+*.acr
+*.alg
+*.xdy
+*.xdv
+
+# Additional Python packaging/cache artifacts
+*$py.class
+.eggs/
+*.egg-info/
+
+# Compiled binaries
+*.o
+*.so
+*.dll
+*.dylib
+*.exe
