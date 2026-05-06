@@ -40,6 +40,7 @@ htmlcov/
 *.npz
 
 # Documents
+*.doc
 *.docx
 
 # Audio files
@@ -106,6 +107,7 @@ Thumbs.db
 *.log
 *.out
 *.run.xml
+*.synctex
 *.synctex.gz
 *.toc
 *.lof
