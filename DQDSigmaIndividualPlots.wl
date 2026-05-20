@@ -74,6 +74,9 @@ If[! And @@ ((Dimensions[#] === {4, 4}) & /@
 lambda2 = 1;
 rho0 = {1, 0, 0, -0.5};
 tmax = 40;
+gibbsPopulation = -Tanh[
+   DQDTCL0GeneratorNum[[2, 4, 2]] Abs[TCL0GeneratorNum[[3, 2]]] / 2
+];
 
 curves = {
    <|
@@ -134,6 +137,14 @@ sigmaPanel[group_Association, sigmaIndex_Integer] := Module[
   curveExpressions = ((MatrixExp[#["Matrix"] t] . rho0)[[componentIndex]] &) /@ groupCurves;
   plotStyles = (#["Style"] &) /@ groupCurves;
   legendLabels = (Style[#["Label"], FontSize -> font2] &) /@ groupCurves;
+  If[MemberQ[{"TCL2", "TCL4"}, group["Tag"]] && sigmaIndex === 3,
+    curveExpressions = Append[curveExpressions, gibbsPopulation];
+    plotStyles = Append[plotStyles, Directive[Black, Dotted, Thickness[0.005]]];
+    legendLabels = Append[
+      legendLabels,
+      Style["Gibbs", FontSize -> font2]
+    ];
+  ];
   Plot[
     Evaluate[curveExpressions],
     {t, 0, tmax},
@@ -162,9 +173,9 @@ sigmaPanel[group_Association, sigmaIndex_Integer] := Module[
         ),
         LegendMargins -> {{5, 5}, {5, 5}}
       ],
-      Scaled[{0.73, 0.25}]
+      Scaled[{0.5, 0.25}]
     ],
-    ImagePadding -> {{42, 6}, {36, 30}},
+    ImagePadding -> {{58, 16}, {54, 46}},
     ImageMargins -> 0,
     PlotRange -> All,
     PlotRangePadding -> Scaled[0.03],
