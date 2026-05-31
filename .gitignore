@@ -139,3 +139,18 @@ Thumbs.db
 *.dll
 *.dylib
 *.exe
+
+# Android/Gradle generated artifacts
+.gradle/
+.kotlin/
+build/
+.cxx/
+.externalNativeBuild/
+captures/
+*.hprof
+*.apk
+*.aab
+*.apks
+*.idsig
+local.properties
+app/release/
