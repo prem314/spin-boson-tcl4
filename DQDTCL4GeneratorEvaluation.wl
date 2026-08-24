@@ -176,7 +176,6 @@ Get["TCL4SpinBosonFunctions.wl"]
 Get["LatexExtract.wl"]
 
 
-
 LoadVar[DQDTCL0GeneratorNum]
 LoadVar[DQDTCL2GeneratorNum]
 LoadVar[DQDTCL4GeneratorNum]
@@ -331,3 +330,26 @@ PlotFunc[3]
 
 PlotFunc[4]
 
+
+
+(* ::Chapter:: *)
+(* DQD TCL4 validity regime *)
+
+
+TCL2GeneratorNum = DQDTCL2GeneratorNum[[1]];
+TCL4GeneratorNum = DQDTCL4GeneratorNum[[1]];
+
+If[DQDTCL2GeneratorNum[[2]] =!= DQDTCL4GeneratorNum[[2]],
+  Print["The stored TCL2 and TCL4 generators use different model parameters."];
+  Abort[];
+];
+
+L2NormRatio = Norm[TCL4GeneratorNum, 2]/Norm[TCL2GeneratorNum, 2];
+
+Print["L2 norm ratio Norm[TCL4GeneratorNum, 2]/Norm[TCL2GeneratorNum, 2] = ",
+  N[L2NormRatio, 16]
+];
+
+
+(* ::Text:: *)
+(*The bare norm ratio is 0.2. The plots are done for \[Gamma] = 0.4. This means that for \[Gamma] = 5, higher than 4th order correction will become important.*)
